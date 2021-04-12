@@ -1,3 +1,10 @@
+
+
+/*
+Author: Steven Varada
+Function: This is for the staff of IST and its being added to a div with
+the ID of content
+*/
 $(document).ready(function(){
 
 function getData(pathName){
