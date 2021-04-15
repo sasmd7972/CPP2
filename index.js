@@ -69,3 +69,31 @@ $(document).ready(function(){
       ]
   });
 })
+
+//About
+$(document).ready(function(){
+
+	function getData(pathName){
+        return $.ajax({
+        type: 'get',
+        url:'http://solace.ist.rit.edu/~plgics/proxy.php',
+        dataType:'json',
+        data: pathName,
+        cache:false,
+        async:true
+        })
+    }
+
+    getData({path:'/about/'}).done(function(data){
+      let titlediv = document.createTextNode(data.title);
+      let content = document.createTextNode(data.description);
+      let quote = document.createTextNode(data.quote);
+      let quoteAuthor = document.createTextNode(data.quoteAuthor);
+      
+      $('#about').append(titlediv,content,quote,quoteAuthor);
+
+    }).fail (function(jqXHR) {
+      // Consider using the jQueryUI "Dialog" widget to display errors
+      $('#about').append(jqXHR.responseText);
+  });
+})
