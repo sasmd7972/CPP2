@@ -21,13 +21,12 @@ $(document).ready(function(){
       
       $('#content-staff').append(ul);
       $.each(data.faculty,function(i, item){
-        $("#facultyUL").append(  "<div><li>" + item.title + "</li><li>" + item.name + "</li></div>");
+        $("#facultyUL").append(  "<div><li>" + item.title + " </li><li>" + item.name + "</li></div>");
         // var imageUrl = data.faculty[i].imagePath;
         // $("#facultyUL div").css("background-image", "url(" + imageUrl + ")");
       })
       $('#facultyUL div').click(function(){
-        let listItemText = $(this).text();
-        // listItemText = listItemText.slice(7);
+        let listItemText = $(this).children('li').last().text();
         console.log(listItemText);
         for (let i = 0; i < data.faculty.length; i++) {
           if (data.faculty[i].name == listItemText) {
