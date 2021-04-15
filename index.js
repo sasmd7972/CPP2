@@ -85,12 +85,29 @@ $(document).ready(function(){
     }
 
     getData({path:'/about/'}).done(function(data){
-      let titlediv = document.createTextNode(data.title);
-      let content = document.createTextNode(data.description);
-      let quote = document.createTextNode(data.quote);
-      let quoteAuthor = document.createTextNode(data.quoteAuthor);
       
+      let aboutContainer = document.createElement('div');
+      let titlediv = document.createElement('div');
+      let content = document.createElement('p');
+      let quote = document.createElement('div');
+      let quoteAuthor = document.createElement('div');
+
+      aboutContainer.id = "aboutContainer";
+
       $('#about').append(titlediv,content,quote,quoteAuthor);
+
+      aboutContainer.appendChild(titlediv);
+      aboutContainer.appendChild(content);
+      aboutContainer.appendChild(quote);
+      aboutContainer.appendChild(quoteAuthor);
+
+      let titleNode = document.createTextNode(data.title);
+      titlediv.appendChild(titleNode);
+      
+
+
+      console.log(data);
+      console.log(data.title + "-" + data.description + '          ');
 
     }).fail (function(jqXHR) {
       // Consider using the jQueryUI "Dialog" widget to display errors

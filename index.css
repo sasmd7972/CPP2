@@ -1,4 +1,16 @@
 /* index.css */
+#content-staff{
+    position: relative;
+    clear: both;
+}
+
+#minorAccordian{
+    position: relative;
+    margin-top: 10%;
+    display: inline-block;
+    width: 70%;
+    margin-left: 15%;
+}
 #facultyUL div {
     position: relative;
     float: left;
@@ -22,7 +34,6 @@
     position: relative;
     top: 40%;
     transform: translate(0%, -50%);
-    /* color: rgb(199, 83, 0); */
     font-family: "Helvetica Neue","Helvetica","Roboto","Arial",sans-serif;
     line-height: 2rem;
 }
