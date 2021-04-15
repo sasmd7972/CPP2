@@ -77,14 +77,7 @@ $(document).ready(function(){
 */
   getData({path:'/minors/UgMinors'}).done(function(data){
     let ugMinors = data.UgMinors;
-    // let ugCourses = [];
-
     for (let i = 0; i < ugMinors.length; i++ ){
-      // ugCourses.push(ugMinors[i].courses);
-      // ugMinors[i].courses[1]
-      // ugCourses.indexOf(ugMinors[i].courses[i]) === -1 ? ugCourses.push(ugMinors[i].courses[i]): console.log("This item already exists");
-      
-      // console.log(ugCourses);
       $("#minorAccordian").append("<h3>" + ugMinors[i].name.toUpperCase() + "</h3>")
         degreeDetails = "<div>" +
           ugMinors[i].title + "<br>" +
@@ -97,7 +90,7 @@ $(document).ready(function(){
           for (let j = 0; j < ugMinors[i].courses.length; j++) {
             ugCourses.indexOf(ugMinors[i].courses[j]) === -1 ? ugCourses.push(ugMinors[i].courses[j]): console.log("This item already exists");
 
-            console.log(ugCourses);
+            // console.log(ugCourses);
             courses = courses +
               "<li>" + ugCourses[j] + "</li>"
           }
@@ -134,30 +127,22 @@ $(document).ready(function(){
     }
 
     getData({path:'/about/'}).done(function(data){
-      
-      let aboutContainer = document.createElement('div');
+      let titleText = document.createTextNode(data.title);
+      let contentText = document.createTextNode(data.description);
+      let quoteText = document.createTextNode(data.quote);
+      let quoteAuthorText = document.createTextNode(data.quoteAuthor);
+
       let titlediv = document.createElement('div');
       let content = document.createElement('p');
       let quote = document.createElement('div');
       let quoteAuthor = document.createElement('div');
-
-      aboutContainer.id = "aboutContainer";
+      
+      titlediv.appendChild(titleText);
+      content.appendChild(contentText);
+      quote.appendChild(quoteText);
+      quoteAuthor.appendChild(quoteAuthorText);
 
       $('#about').append(titlediv,content,quote,quoteAuthor);
-
-      aboutContainer.appendChild(titlediv);
-      aboutContainer.appendChild(content);
-      aboutContainer.appendChild(quote);
-      aboutContainer.appendChild(quoteAuthor);
-
-      let titleNode = document.createTextNode(data.title);
-      titlediv.appendChild(titleNode);
-      
-
-
-      console.log(data);
-      console.log(data.title + "-" + data.description + '          ');
-
     }).fail (function(jqXHR) {
       // Consider using the jQueryUI "Dialog" widget to display errors
       $('#about').append(jqXHR.responseText);
