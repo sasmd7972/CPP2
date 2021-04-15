@@ -1,4 +1,17 @@
 /* index.css */
+#content-staff{
+    position: relative;
+    clear: both;
+}
+
+#minorAccordian{
+    position: relative;
+    margin-top: 10%;
+    display: inline-block;
+    width: 70%;
+    margin-left: 15%;
+}
+
 #facultyUL div {
     position: relative;
     float: left;

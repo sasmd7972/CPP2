@@ -13,6 +13,7 @@ $(document).ready(function(){
     }
 
     getData({path:'/people/faculty/'}).done(function(data){
+      // console.log(data.faculty);
       let ul = document.createElement('ul');
       let liDiv = document.createElement('div');
 
@@ -57,15 +58,63 @@ $(document).ready(function(){
       autoOpen: false,
       width: 600,
       buttons: [
-          {
-              text: "OK",
-              icons: {
-                  primary: "ui-icon-heart"
-              },
-              click: function() {
-                  $( "#dialog" ).dialog( "close" );
-              }
-          }
+        {
+            text: "OK",
+            icons: {
+                primary: "ui-icon-heart"
+            },
+            click: function() {
+                $( "#dialog" ).dialog( "close" );
+            }
+        }
       ]
   });
+
+/*
+ * GetData 
+ * Undergraduate description and info
+ *  
+*/
+  getData({path:'/minors/UgMinors'}).done(function(data){
+    let ugMinors = data.UgMinors;
+    // let ugCourses = [];
+
+    for (let i = 0; i < ugMinors.length; i++ ){
+      // ugCourses.push(ugMinors[i].courses);
+      // ugMinors[i].courses[1]
+      // ugCourses.indexOf(ugMinors[i].courses[i]) === -1 ? ugCourses.push(ugMinors[i].courses[i]): console.log("This item already exists");
+      
+      // console.log(ugCourses);
+      $("#minorAccordian").append("<h3>" + ugMinors[i].name.toUpperCase() + "</h3>")
+        degreeDetails = "<div>" +
+          ugMinors[i].title + "<br>" +
+          ugMinors[i].description + "<br>";
+          let 
+          courses = "<br>Courses:"
+          courses = courses + "<ul>";
+
+          let ugCourses = [];
+          for (let j = 0; j < ugMinors[i].courses.length; j++) {
+            ugCourses.indexOf(ugMinors[i].courses[j]) === -1 ? ugCourses.push(ugMinors[i].courses[j]): console.log("This item already exists");
+
+            console.log(ugCourses);
+            courses = courses +
+              "<li>" + ugCourses[j] + "</li>"
+          }
+          courses = courses + "</ul>";
+          degreeDetails = degreeDetails + courses;
+
+      $("#minorAccordian").append(
+          degreeDetails
+      )                        
+    }
+
+    $("#minorAccordian").accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content"
+    });
+  
+  });
+
 })
