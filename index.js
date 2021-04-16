@@ -241,29 +241,72 @@ $(document).ready(function(){
     getData({path:'/research/'}).done(function(data){
       // Employment Heading
       $('#research').append("<h1>" + "Research" + "</h1>" );
-      // This is the div for research byInterestAreaDiv
-      $('#research').append('<div id="byInterestAreaDiv"></div>');
-
+   
       $.each(data.byInterestArea,function(i, item){
-        $('#byInterestAreaDiv').append("<h3>" + item.areaName + "</h3>");
-        $.each(data.byInterestArea.citations,function(i, item){
-          $('#byInterestAreaDiv').append("<p>" + item + "<p>");
-        })
+        if ( i == 0){ //Adds ul tag at the start of the heading tabs
+          $('#research').append('<ul id="Tabsul">');
+        }
+        $('#Tabsul').append("<li><a href=#div" + i + ">" + item.areaName + "</a></li>"); // Adding the heading of the tabs
+        if ( i == data.byInterestArea.length-1){ // Closes the ul tag for the heading tabs
+          $('#research').append("</ul>");
+        }
       })
-      
+      $.each(data.byInterestArea,function(i, item){
+        // This is a temp 
+        let tempDiv;
+        //Adds div tag at the start of the heading tabs
+        tempDiv = "<div id='div" + i + "'>";
+        $.each(item.citations,function(j, itemText){
+          // Adds the items information into the div for the tab
+          tempDiv = tempDiv + "<p>" + itemText + "</p>";
+        });
+        //Checks to see that the div is on its last item and appened the total information on to the tab
+        $('#research').append(tempDiv + "</div>");
+      })
+      // This craete the tabs
+      $('#research').tabs();
     }).fail (function(jqXHR) {
       // Consider using the jQueryUI "Dialog" widget to display errors
       $('#research').append(jqXHR.responseText);
     });
 
+    // Footer
+    getData({path:'/footer/'}).done(function(data){
+      let count = 0;
+      $('footer').append("<div id='social'></div>");
+      // Social Media
+      $.each(data.social,function(i, item){
+        if( count == 0){
+          $('#social').append("<h3>" + item + "</h3>");
+        }
+        count += 1;
+        if( count == 4){
+          $('#social').append("<a href='" + item + "'>" + "Twitter" + "</a><br>");
+        }
+        if( count == 5){
+          $('#social').append("<a href='" + item + "'>" + "Facebook" + "</a>");
+        }
+      })
+
+      // Quicklinks
+      $('footer').append("<div id='quickLinks'></div>");
+      $.each(data.quickLinks,function(i, item){
+        $('#quickLinks').append("<a href='" + item.href + "'>" + item.title + "</a><br>");
+      })
+
+      // Copyright
+      $('footer').append("<div id='copyright'></div>");
+      $.each(data.copyright,function(i, item){
+        // Copyright HTML
+        if ( i == "html" ){
+        $('#copyright').append(item);
+        }
+      })
+      //News
+      $('footer').append("<div id='news'></div>");
+      $('#news').append("<a href='" + data.news + "'>" + "News" + "</a>");
+    }).fail (function(jqXHR) {
+    // Consider using the jQueryUI "Dialog" widget to display errors
+    $('footer').append(jqXHR.responseText);
+  });
 });
-
-    // $("#employment").append("<h1>" + data.introduction.title + "</h1>");
-      // // Employment Heading      
-      // $("#employment").append("<h1>" + data.introduction.title + "</h1>");
-
-      // // This iterates through the employment introduction content makes title h3 and description p tag
-      // // Employment and Copperative Education Sections
-      // $.each(data.introduction.content,function(i, item){
-      //   $("#employment").append("<div><h3>" + item.title + " </h3><p>" + item.description + "</p></div>");
-      // })
