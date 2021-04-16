@@ -35,39 +35,73 @@ $(document).ready(function(){
     });
 
     // Degree
+    getData({path:'/degrees'}).done(function(data){
+      let degTitle = document.createElement('h2');
+      degTitle.append('Undergraduate Degrees');
+      $('#degree').append(degTitle);
+      $.each(data.undergraduate,function(i, item){
+        let ugDiv = document.createElement('div');
+        let ugH3 = document.createElement('h3');
+        let ugP = document.createElement('p');
 
+        ugDiv.id = 'ugDiv';
+        $(ugH3).append(item.title);
+        $(ugP).append(item.description);
+        $(ugDiv).append(ugH3,ugP);
+        $('#degree').append( ugDiv);
+      
+      })
 
-    
+      let gTitle = document.createElement('h2');
+      gTitle.append('Graduate Degrees');
+
+      $.each(data.graduate,function(i, item){
+        let gDiv = document.createElement('div');
+        let gH3 = document.createElement('h3');
+        let gP = document.createElement('p');
+
+        gDiv.id = 'ugDiv';
+        $(gH3).append(item.title);
+        $(gP).append(item.description);
+        $(gDiv).append(gH3,gP);
+        $('#gdegree').append(gDiv);
+      })
+      $('#degree').append(gTitle);
+      
+     
+     }).fail (function(jqXHR) {
+      // Consider using the jQueryUI "Dialog" widget to display errors
+      $('#minorAccordian').append(jqXHR.responseText);
+    });
+
     // Minors
     // GetData Undergraduate description and info
-     getData({path:'/minors/UgMinors'}).done(function(data){
-       let ugMinors = data.UgMinors;
-       
-       
-       for (let i = 0; i < ugMinors.length; i++ ){
-         $("#minorAccordian").append("<h3>" + ugMinors[i].name.toUpperCase() + "</h3>")
-           degreeDetails = "<div>" +
-             ugMinors[i].title + "<br>" +
-             ugMinors[i].description + "<br>";
-             let 
-             courses = "<br>Courses:"
-             courses = courses + "<ul>";
-   
-             let ugCourses = [];
-             for (let j = 0; j < ugMinors[i].courses.length; j++) {
-               ugCourses.indexOf(ugMinors[i].courses[j]) === -1 ? ugCourses.push(ugMinors[i].courses[j]): console.log("This item already exists");
-   
-               // console.log(ugCourses);
-               courses = courses +
-                 "<li>" + ugCourses[j] + "</li>"
-             }
-             courses = courses + "</ul>";
-             degreeDetails = degreeDetails + courses;
-   
-         $("#minorAccordian").append(
-             degreeDetails
-         )                        
-       }
+    getData({path:'/minors/UgMinors'}).done(function(data){
+      let ugMinors = data.UgMinors;
+      for (let i = 0; i < ugMinors.length; i++ ){
+        $("#minorAccordian").append("<h3>" + ugMinors[i].name.toUpperCase() + "</h3>")
+          minorDetails = "<div>" +
+            ugMinors[i].title + "<br>" +
+            ugMinors[i].description + "<br>";
+            let 
+            courses = "<br>Courses:"
+            courses = courses + "<ul>";
+  
+            let ugCourses = [];
+            for (let j = 0; j < ugMinors[i].courses.length; j++) {
+              ugCourses.indexOf(ugMinors[i].courses[j]) === -1 ? ugCourses.push(ugMinors[i].courses[j]): console.log("This item already exists");
+  
+              // console.log(ugCourses);
+              courses = courses +
+                "<li>" + ugCourses[j] + "</li>"
+            }
+            courses = courses + "</ul>";
+            minorDetails = minorDetails + courses;
+  
+        $("#minorAccordian").append(
+            minorDetails
+        )                        
+      }
    
        $("#minorAccordian").accordion({
            collapsible: true,
@@ -148,7 +182,7 @@ $(document).ready(function(){
             { name: "term", type: "text", width: 10}
         ]
       });
-    
+  
       //Employment Table
       $("#employment").append("<h2>" + data.employmentTable.title + "</h2>");
       // This is the Employment table div
@@ -178,10 +212,8 @@ $(document).ready(function(){
       $('#employment').append(jqXHR.responseText);
     });
 
-
     // Faculty
     getData({path:'/people/faculty/'}).done(function(data){
-      // console.log(data.faculty);
       let ul = document.createElement('ul');
       let liDiv = document.createElement('div');
 
@@ -191,8 +223,6 @@ $(document).ready(function(){
       $('#content-staff').append(ul);
       $.each(data.faculty,function(i, item){
         $("#facultyUL").append(  "<div><li>" + item.title + " </li><li>" + item.name + "</li></div>");
-        // var imageUrl = data.faculty[i].imagePath;
-        // $("#facultyUL div").css("background-image", "url(" + imageUrl + ")");
       })
       $('#facultyUL div').click(function(){
         let listItemText = $(this).children('li').last().text();
@@ -271,42 +301,56 @@ $(document).ready(function(){
     });
 
     // Footer
-    getData({path:'/footer/'}).done(function(data){
-      let count = 0;
-      $('footer').append("<div id='social'></div>");
-      // Social Media
-      $.each(data.social,function(i, item){
-        if( count == 0){
-          $('#social').append("<h3>" + item + "</h3>");
-        }
-        count += 1;
-        if( count == 4){
-          $('#social').append("<a href='" + item + "'>" + "Twitter" + "</a><br>");
-        }
-        if( count == 5){
-          $('#social').append("<a href='" + item + "'>" + "Facebook" + "</a>");
-        }
-      })
+  getData({path:'/footer/'}).done(function(data){
+    let count = 0;
+    $('footer').append("<div id='social'></div>");
+    // Social Media
+    $.each(data.social,function(i, item){
+      if( count == 0){
+        $('#social').append("<h3>" + item + "</h3>");
+      }
+      count += 1;
+      if( count == 4){
+        $('#social').append("<a href='" + item + "'>" + "Twitter" + "</a><br>");
+      }
+      if( count == 5){
+        $('#social').append("<a href='" + item + "'>" + "Facebook" + "</a>");
+      }
+    })
 
-      // Quicklinks
-      $('footer').append("<div id='quickLinks'></div>");
-      $.each(data.quickLinks,function(i, item){
-        $('#quickLinks').append("<a href='" + item.href + "'>" + item.title + "</a><br>");
-      })
+    // Quicklinks
+    $('footer').append("<div id='quickLinks'></div>");
+    $.each(data.quickLinks,function(i, item){
+      $('#quickLinks').append("<a href='" + item.href + "'>" + item.title + "</a><br>");
+    })
 
-      // Copyright
-      $('footer').append("<div id='copyright'></div>");
-      $.each(data.copyright,function(i, item){
-        // Copyright HTML
-        if ( i == "html" ){
-        $('#copyright').append(item);
-        }
-      })
-      //News
-      $('footer').append("<div id='news'></div>");
-      $('#news').append("<a href='" + data.news + "'>" + "News" + "</a>");
-    }).fail (function(jqXHR) {
+    // Copyright
+    $('footer').append("<div id='copyright'></div>");
+    $.each(data.copyright,function(i, item){
+      // Copyright HTML
+      if ( i == "html" ){
+      $('#copyright').append(item);
+      }
+    })
+    //News
+    $('footer').append("<div id='news'></div>");
+    $('#news').append("<a href='" + data.news + "'>" + "News" + "</a>");
+  }).fail (function(jqXHR) {
+  // Consider using the jQueryUI "Dialog" widget to display errors
+  $('footer').append(jqXHR.responseText);
+});
+
+
+// api key: AIzaSyDUD4-pGQVEWgFKzoC04jcbFiUw8jFKUls
+  getData({path:'/map/'}).done(function(data){
+
+    let iframe = document.createElement('iframe');
+    $(iframe).append(data);
+    $('#map').append(iframe);
+
+  }).fail (function(jqXHR) {
     // Consider using the jQueryUI "Dialog" widget to display errors
-    $('footer').append(jqXHR.responseText);
-  });
+    $('#map').append(jqXHR.responseText);
+  });    
+
 });

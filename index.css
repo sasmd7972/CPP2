@@ -44,3 +44,21 @@
     font-size: 1.15 rem;
     font-weight: 900;
 }
+#ugDiv{
+    position: relative;
+    margin: 2% 1%;
+    padding: 1%;
+    width: 29%;
+    display: inline-block;
+    text-align: center;
+    /* background: #ffddbd; */
+    border-radius: 10px;
+    transition: box-shadow .8s;
+}
+ul{
+    clear: both;
+    display: inline-block;
+}
+/* #ugDiv:nth-of-type(4){
+    clear: both;
+} */
