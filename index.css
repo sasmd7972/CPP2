@@ -1,4 +1,39 @@
 /* index.css */
+body{
+    margin: 0;
+    font-family: Helvetica Neue;
+}
+
+.navbar a{
+    float: left;
+    color: white;
+    text-decoration: none;
+    list-style-type: none;
+    font-weight: 800;
+    padding: 2px 7px;
+}
+
+.navbar a:hover{
+    color: #F76902;
+}
+
+ul#nav{
+    padding-left: 10px;
+}
+
+#header_image{
+    box-shadow: 0px 2px 20px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #3c4246;
+    color: white;
+    box-shadow: 0px 2px 20px 5px rgba(0, 0, 0, 0.35);
+}
+
 #content-staff{
     position: relative;
     clear: both;
@@ -6,7 +41,7 @@
 
 #minorAccordian{
     position: relative;
-    margin-top: 10%;
+    margin-top: 2%;
     display: inline-block;
     width: 70%;
     margin-left: 15%;
@@ -23,6 +58,12 @@
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     transition: box-shadow .8s;
+}
+#about{
+    margin: 2% 7%;
+    padding: 2%;
+    border-radius: 15px;
+    background-color: #7c878e3a;
 }
 
 #facultyUL div:hover {
@@ -46,19 +87,75 @@
 }
 #ugDiv{
     position: relative;
-    margin: 2% 1%;
+    margin: 0% 1%;
     padding: 1%;
     width: 29%;
     display: inline-block;
     text-align: center;
-    /* background: #ffddbd; */
     border-radius: 10px;
-    transition: box-shadow .8s;
+}
+#degree,#gdegree,#employment,#research,#map, #content-staff h2{
+    margin: 0% 7%;
+}
+/* #empTitle{
+    font-style: italic;
+} */
+#content-staff h2{
+    padding-top: 3%;
 }
 ul{
     clear: both;
     display: inline-block;
 }
-/* #ugDiv:nth-of-type(4){
+h2{
+    color: rgb(199, 83, 0);
+}
+
+#research p:nth-child(even){
+    background-color: rgba(199, 83, 0, 0.05);   
+}
+#research p{
+    padding: 5px;
+    border-radius: 5px;
+}
+.ui-widget.ui-widget-content {
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+footer{
+    font-family: Helvetica Neue;
+    color: white;
+    background-color:#3c4246;
+    width: 100%;
+    margin-top: 7%;
+    float: left;
+}
+footer a{
+    color: white;
+    text-decoration: none;
+    list-style-type: none;
+    font-weight: 800;
+    padding: 2px 7px;
+}
+footer a:hover{
+    color: yellow;
+}
+#social{
+    padding: 2%;
+    float: left;
+}
+#news{
+    float: left;
+}
+#quickLinks{
+    padding-right: 68%;
+    padding-top: 6%;
+    float: right;
+}
+#copyright{
+    text-align: center;
+    padding: 2%;
     clear: both;
-} */
+}

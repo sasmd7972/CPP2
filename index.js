@@ -30,7 +30,7 @@ $(document).ready(function(){
 
       $('#about').append(titlediv,content,quote,quoteAuthor);
     }).fail (function(jqXHR) {
-      // Consider using the jQueryUI "Dialog" widget to display errors
+      
       $('#about').append(jqXHR.responseText);
     });
 
@@ -67,10 +67,8 @@ $(document).ready(function(){
         $('#gdegree').append(gDiv);
       })
       $('#degree').append(gTitle);
-      
-     
      }).fail (function(jqXHR) {
-      // Consider using the jQueryUI "Dialog" widget to display errors
+      
       $('#minorAccordian').append(jqXHR.responseText);
     });
 
@@ -79,45 +77,37 @@ $(document).ready(function(){
     getData({path:'/minors/UgMinors'}).done(function(data){
       let ugMinors = data.UgMinors;
       for (let i = 0; i < ugMinors.length; i++ ){
-        $("#minorAccordian").append("<h3>" + ugMinors[i].name.toUpperCase() + "</h3>")
+        $("#minorAccordian").append("<h3>" + ugMinors[i].title.toUpperCase() + "</h3>")
           minorDetails = "<div>" +
-            ugMinors[i].title + "<br>" +
-            ugMinors[i].description + "<br>";
-            let 
-            courses = "<br>Courses:"
-            courses = courses + "<ul>";
+          ugMinors[i].name + "<br>" +
+          ugMinors[i].description + "<br>";
+          courses = "<br>Courses:<br>"
+          courses = courses + "<ul>";
+
+          let ugCourses = [];
+          for (let j = 0; j < ugMinors[i].courses.length; j++) {
+            ugCourses.indexOf(ugMinors[i].courses[j]) === -1 ? ugCourses.push(ugMinors[i].courses[j]): console.log("exists");
+            courses = courses + "<li>" + ugCourses[j] + "</li>" }
+          courses = courses + "</ul>";
+          minorDetails = minorDetails + courses;
   
-            let ugCourses = [];
-            for (let j = 0; j < ugMinors[i].courses.length; j++) {
-              ugCourses.indexOf(ugMinors[i].courses[j]) === -1 ? ugCourses.push(ugMinors[i].courses[j]): console.log("This item already exists");
-  
-              // console.log(ugCourses);
-              courses = courses +
-                "<li>" + ugCourses[j] + "</li>"
-            }
-            courses = courses + "</ul>";
-            minorDetails = minorDetails + courses;
-  
-        $("#minorAccordian").append(
-            minorDetails
-        )                        
-      }
+        $("#minorAccordian").append(minorDetails)}
    
-       $("#minorAccordian").accordion({
+        $("#minorAccordian").accordion({
            collapsible: true,
            active: false,
            heightStyle: "content"
        });
      
      }).fail (function(jqXHR) {
-      // Consider using the jQueryUI "Dialog" widget to display errors
+      
       $('#minorAccordian').append(jqXHR.responseText);
     });
 
     // Employment
     getData({path:'/employment/'}).done(function(data){
       // Employment Heading      
-      $("#employment").append("<h1>" + data.introduction.title + "</h1>");
+      $("#employment").append("<h2 id='empTitle'>" + data.introduction.title + "</h2>");
 
       // This iterates through the employment introduction content makes title h3 and description p tag
       // Employment and Copperative Education Sections
@@ -208,7 +198,7 @@ $(document).ready(function(){
          ]
      });
     }).fail (function(jqXHR) {
-      // Consider using the jQueryUI "Dialog" widget to display errors
+      
       $('#employment').append(jqXHR.responseText);
     });
 
@@ -246,7 +236,7 @@ $(document).ready(function(){
         }
       })
     }).fail (function(jqXHR) {
-        // Consider using the jQueryUI "Dialog" widget to display errors
+        
         $('#content-staff').append(jqXHR.responseText);
     });
 
@@ -270,7 +260,7 @@ $(document).ready(function(){
     
     getData({path:'/research/'}).done(function(data){
       // Employment Heading
-      $('#research').append("<h1>" + "Research" + "</h1>" );
+      $('#research').append("<h2>" + "Research" + "</h2>" );
    
       $.each(data.byInterestArea,function(i, item){
         if ( i == 0){ //Adds ul tag at the start of the heading tabs
@@ -296,7 +286,7 @@ $(document).ready(function(){
       // This craete the tabs
       $('#research').tabs();
     }).fail (function(jqXHR) {
-      // Consider using the jQueryUI "Dialog" widget to display errors
+      
       $('#research').append(jqXHR.responseText);
     });
 
@@ -324,6 +314,8 @@ $(document).ready(function(){
       $('#quickLinks').append("<a href='" + item.href + "'>" + item.title + "</a><br>");
     })
 
+    $('#footer').append("<a href='" + data.news + "'>" + "News" + "</a>");
+
     // Copyright
     $('footer').append("<div id='copyright'></div>");
     $.each(data.copyright,function(i, item){
@@ -332,25 +324,16 @@ $(document).ready(function(){
       $('#copyright').append(item);
       }
     })
-    //News
-    $('footer').append("<div id='news'></div>");
-    $('#news').append("<a href='" + data.news + "'>" + "News" + "</a>");
+    // //News
+    // $('footer').append("<div id='news'></div>");
+    // $('#news').append("<a href='" + data.news + "'>" + "News" + "</a>");
   }).fail (function(jqXHR) {
-  // Consider using the jQueryUI "Dialog" widget to display errors
+  
   $('footer').append(jqXHR.responseText);
 });
 
-
-// api key: AIzaSyDUD4-pGQVEWgFKzoC04jcbFiUw8jFKUls
-  getData({path:'/map/'}).done(function(data){
-
-    let iframe = document.createElement('iframe');
-    $(iframe).append(data);
-    $('#map').append(iframe);
-
-  }).fail (function(jqXHR) {
-    // Consider using the jQueryUI "Dialog" widget to display errors
-    $('#map').append(jqXHR.responseText);
-  });    
+    
+    $('.navbar a').smoothScroll();
+    $('#nav a').smoothScroll();
 
 });
