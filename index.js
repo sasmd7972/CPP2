@@ -11,6 +11,88 @@ $(document).ready(function(){
         async:true
         })
     }
+
+    // Chart Information
+    getData({path:'/employment/'}).done(function(data){
+      // Chart Heading
+    $('#chart').append("<h3>" + "Chart of students degress that were all hired!" + "</h3>");
+    
+    // These are the values of columns of the chart 
+    let c1,c2,c3,c4,c5,c6,c7,c8,c9,c10;
+      // Adds a tally mark to colum that degree appears for
+    $.each(data.coopTable.coopInformation,function(i, item){
+      console.log(item.degree);  
+        if ( item.degree == "WMC-BS") {
+          c1++;
+        }
+        if ( item.degree == 'CMIT-BS') {
+          c2++;
+        }
+        if ( item.degree == 'INFOTEC-BS') {
+          c3++;
+        }
+        if ( item.degree == 'ANSA-BS') {
+          c4++;
+        }
+        if ( item.degree == "NETSYS-MS") {
+          c5++;
+        }
+        if ( item.degree == 'MEDINFO-BS') {
+          c6++;
+        }
+        if ( item.degree == 'HCIN-MS') {
+          c7++;
+        }
+        if ( item.degree == 'NETSYS-MS') {
+          c8++;
+        }
+        if ( item.degree == 'INFOTEC-MS') {
+          c9++;
+        }
+        if ( item.degree == 'MEDINFO-MS') {
+          c10++;
+        }
+    })
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['WMC-BS', 'CMIT-BS', 'INFOTEC-BS', 'ANSA-BS', 'NETSYS-BS', 'MEDINFO-BS','HCIN-MS','NETSYS-MS','INFOTEC-MS','MEDINFO-MS'],
+            datasets: [{
+                label: 'Student Degrees',
+                data: [123,52,261,163,1,23,38,0,68,0],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+      });
+    }).fail (function(jqXHR) {
+      // Consider using the jQueryUI "Dialog" widget to display errors
+      $('#employment').append(jqXHR.responseText);
+    });
+
     //About
     getData({path:'/about/'}).done(function(data){
       let titleText = document.createTextNode(data.title);
