@@ -414,8 +414,36 @@ $(document).ready(function(){
   $('footer').append(jqXHR.responseText);
 });
 
-    
-    $('.navbar a').smoothScroll();
-    $('#nav a').smoothScroll();
+  //smoothe scroll  
+  $('.navbar a').smoothScroll();
+  $('#nav a').smoothScroll();
 
+});
+// navbar hover jquery plugin http://tympanus.net/codrops/2009/12/11/fixed-fade-out-menu-a-css-and-jquery-tutorial/
+$(function() {
+  $(window).scroll(function(){
+    var position = $(window).scrollTop();
+    if(position != 0){
+      //animate opaicity to 15% when scrolling down
+      $('#nav').stop().animate({'opacity':'0.15'},500);
+    }
+    else{	
+      $('#nav').stop().animate({'opacity':'1'},400);
+    }
+  });
+  //when navabr is moused over (hover) the opacity returns to 100%
+  $('#nav').hover(
+    function (e) {
+      var position = $(window).scrollTop();
+        if(position != 0){
+      $('#nav').stop().animate({'opacity':'1'},400);
+      }
+    },
+    function (e) {
+      var position = $(window).scrollTop();
+      if(position != 0){
+        $('#nav').stop().animate({'opacity':'0.15'},500);
+      }
+    }
+  );
 });
