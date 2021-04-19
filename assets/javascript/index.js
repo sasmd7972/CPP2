@@ -12,44 +12,55 @@ $(document).ready(function(){
         })
     }
 
-    // Chart Information
+
+// Chart Information
     getData({path:'/employment/'}).done(function(data){
       // Chart Heading
     $('#chart').append("<h3>" + "Chart of students degress that were all hired!" + "</h3>");
     
+    var degreArray = ['WMC-BS', 'CMIT-BS', 'INFOTEC-BS', 'ANSA-BS', 'NETSYS-BS', 'MEDINFO-BS','HCIN-MS','NETSYS-MS','INFOTEC-MS','MEDINFO-MS'];
     // These are the values of columns of the chart 
-    let c1,c2,c3,c4,c5,c6,c7,c8,c9,c10;
+    var c1 = 0;
+    var c2 = 0;
+    var c3 = 0;
+    var c4 = 0;
+    var c5 = 0;
+    var c6 = 0;
+    var c7 = 0;
+    var c8 = 0;
+    var c9 = 0;
+    var c10 = 0;
+
       // Adds a tally mark to colum that degree appears for
-    $.each(data.coopTable.coopInformation,function(i, item){
-      console.log(item.degree);  
-        if ( item.degree == "WMC-BS") {
+    $.each(data.employmentTable.professionalEmploymentInformation,function(i, item){
+        if ( item.degree == degreArray[0]) {
           c1++;
         }
-        if ( item.degree == 'CMIT-BS') {
+        if ( item.degree ==  degreArray[1]) {
           c2++;
         }
-        if ( item.degree == 'INFOTEC-BS') {
+        if ( item.degree ==  degreArray[2]) {
           c3++;
         }
-        if ( item.degree == 'ANSA-BS') {
+        if ( item.degree ==  degreArray[3]) {
           c4++;
         }
-        if ( item.degree == "NETSYS-MS") {
+        if ( item.degree ==  degreArray[4]) {
           c5++;
         }
-        if ( item.degree == 'MEDINFO-BS') {
+        if ( item.degree ==  degreArray[5]) {
           c6++;
         }
-        if ( item.degree == 'HCIN-MS') {
+        if ( item.degree ==  degreArray[6]) {
           c7++;
         }
-        if ( item.degree == 'NETSYS-MS') {
+        if ( item.degree ==  degreArray[7]) {
           c8++;
         }
-        if ( item.degree == 'INFOTEC-MS') {
+        if ( item.degree ==  degreArray[8]) {
           c9++;
         }
-        if ( item.degree == 'MEDINFO-MS') {
+        if ( item.degree ==  degreArray[9]) {
           c10++;
         }
     })
@@ -57,10 +68,10 @@ $(document).ready(function(){
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['WMC-BS', 'CMIT-BS', 'INFOTEC-BS', 'ANSA-BS', 'NETSYS-BS', 'MEDINFO-BS','HCIN-MS','NETSYS-MS','INFOTEC-MS','MEDINFO-MS'],
+            labels: degreArray,
             datasets: [{
                 label: 'Student Degrees',
-                data: [123,52,261,163,1,23,38,0,68,0],
+                data: [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -206,6 +217,7 @@ $(document).ready(function(){
       employmentDiv.appendChild(employmentUL);
       // This is the li being atteched to employersUL tag
       $.each(data.employers.employerNames,function(i, item){
+        console.log(item);
         $("#employmentUL").append("<li>" + item + " </li>");
       })
 
